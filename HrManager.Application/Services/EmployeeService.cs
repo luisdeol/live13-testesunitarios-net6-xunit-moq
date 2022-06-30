@@ -1,27 +1,23 @@
-﻿using System;
-using HrManager.Application.Models.InputModels;
+﻿using HrManager.Application.Models.InputModels;
 using HrManager.Application.Models.ViewModels;
 using HrManager.Core.Repositories;
-using HrManager.Infrastructure.Persistence;
 
 namespace HrManager.Application.Services
 {
     public class EmployeeService : IEmployeeService
 	{
-        private readonly HrManagerDbContext _context;
+        private readonly IEmployeeRepository _repository;
 
-        public EmployeeService(HrManagerDbContext context)
+        public EmployeeService(IEmployeeRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
 		public AddEmployeeViewModel Add(AddEmployeeInputModel model)
         {
             var employee = model.ToEntity();
 
-            _context.Employees.Add(employee);
-
-            _context.SaveChanges();
+            _repository.Add(employee);
 
             return AddEmployeeViewModel.FromEntity(employee);
         }

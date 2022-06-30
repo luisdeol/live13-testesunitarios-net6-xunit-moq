@@ -11,7 +11,7 @@ namespace HrManager.Core.Entities
             Id = Guid.NewGuid();
             FullName = fullName;
             Document = document;
-            BirthDate = birthDate;
+            BirthDate = birthDate < DateTime.Today ? birthDate : throw new BirthDateCannotBeInTheFutureException();
             RoleLevel = roleLevel;
             Role = role;
         }
